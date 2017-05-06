@@ -311,7 +311,8 @@ function startDatabaseQueries() {
     currentStatusRef.once('value').then(function(snapshot){
     var currentStatus = snapshot.val().CurrentStatus;
     console.log(currentStatus);
-    if(total_count > 4) alert('Task finished');
+    if(index >=0 && currentStatus != nodes[index]){
+    if(index > 2 && total_count > 4) alert('Task finished');
     else{
     if(total_count == 0){
       elememt.innerHTML = '<div class="dot">'+
@@ -325,8 +326,11 @@ function startDatabaseQueries() {
 	    '<span id="'+index+'"></span>'+
 		  '<date>'+currentStatus+'</date>'+
 	    '</div>';
+            document.getElementById(total_count-1).style.background = "grey";
       total_count = total_count + 1;
 
+
+    }
     }
     }
   });
@@ -371,11 +375,10 @@ function startDatabaseQueries() {
   // listeningFirebaseRefs.push(userPostsRef);
 }
 
-function changeCurrentStatus(){
-  var rand = Math.floor(Math.random()*7);
+function changeCurrentStatus(status){
   var ref = firebase.database().ref();
   ref.update({
-      "CurrentStatus":rand
+      "CurrentStatus":status
     });
 }
 
@@ -416,9 +419,11 @@ function move(){
 		  '<date>'+nodes[index]+'</date>'+
 	    '</div>';
       total_count = total_count + 1;
+      changeCurrentStatus(nodes[index]);
+
 
     }
-    else if(total_count > 4){
+    else if(index > 2){
       alert('Task finished');
     }
     else{
@@ -429,6 +434,7 @@ function move(){
       document.getElementById(index-1).style.background = "grey";
       total_count = total_count + 1;
 
+      changeCurrentStatus(nodes[index]);
     }
   }
 }
