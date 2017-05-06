@@ -311,22 +311,22 @@ function startDatabaseQueries() {
     var currentStatus;
     currentStatusRef.once('value').then(function(snapshot){
     var currentStatus = snapshot.val().CurrentStatus;
-    console.log(currentStatus);
-    currentStatus = currentStatus - 1;
-    if(currentStatus > nodes.length - 1) alert('Task finished');
+    if( total_count > 7) alert('Task finished');
     else{
-    if(index == -1 && currentStatus_count == 0){
+    if(total_count == 0){
       elememt.innerHTML = '<div class="dot">'+
 	    '<span id="'+index+'"></span>'+
-		  '<date>'+nodes[currentStatus]+'</date>'+
+		  '<date>'+currentStatus+'</date>'+
 	    '</div>';
-      currentStatus_count = currentStatus_count + 1;
+      total_count = total_count + 1;
     }
     else{
       elememt.innerHTML = elememt.innerHTML + '<div class="dot">'+
 	    '<span id="'+index+'"></span>'+
-		  '<date>'+nodes[currentStatus]+'</date>'+
+		  '<date>'+currentStatus+'</date>'+
 	    '</div>';
+            total_count = total_count + 1;
+
     }
     }
   });
@@ -410,11 +410,13 @@ function move(){
     index = -1;
   }
   else{
-  if(index==0 && currentStatus_count == 0){
+  if(total_count == 0){
       elememt.innerHTML = '<div class="dot">'+
 	    '<span id="'+index+'"></span>'+
 		  '<date>'+nodes[index]+'</date>'+
 	    '</div>';
+            total_count = total_count + 1;
+
     }
     else if(index > nodes.length - 1){
       alert('Task finished');
@@ -425,6 +427,8 @@ function move(){
 		  '<date>'+nodes[index]+'</date>'+
 	    '</div>';
       document.getElementById(index-1).style.background = "grey";
+            total_count = total_count + 1;
+
     }
   }
 }
