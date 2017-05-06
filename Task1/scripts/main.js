@@ -311,19 +311,21 @@ function startDatabaseQueries() {
     currentStatusRef.once('value').then(function(snapshot){
     var currentStatus = snapshot.val().CurrentStatus;
     console.log(currentStatus);
-    if(index >=0 && currentStatus != nodes[index]){
+
+
+    if((index >=0 && currentStatus != nodes[index]) || index == -1){
     if(index > 2 && total_count > 4) alert('Task finished');
     else{
     if(total_count == 0){
       elememt.innerHTML = '<div class="dot">'+
-	    '<span id="'+index+'"></span>'+
+	    '<span id="'+total_count+'"></span>'+
 		  '<date>'+currentStatus+'</date>'+
 	    '</div>';
       total_count = total_count + 1;
     }
     else{
       elememt.innerHTML = elememt.innerHTML + '<div class="dot">'+
-	    '<span id="'+index+'"></span>'+
+	    '<span id="'+total_count+'"></span>'+
 		  '<date>'+currentStatus+'</date>'+
 	    '</div>';
             document.getElementById(total_count-1).style.background = "grey";
@@ -337,43 +339,9 @@ function startDatabaseQueries() {
 
     
 
-  });
-
-
-
-  // var fetchPosts = function(postsRef, sectionElement) {
-  //   postsRef.on('child_added', function(data) {
-  //     var event = data.val().Event || 'Unknown';
-  //     var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-  //     containerElement.insertBefore(
-  //         createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
-  //         containerElement.firstChild);
-  //   });
-  //   postsRef.on('child_changed', function(data) {	
-	// 	var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-	// 	var postElement = containerElement.getElementsByClassName('post-' + data.key)[0];
-	// 	postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = data.val().title;
-	// 	postElement.getElementsByClassName('username')[0].innerText = data.val().author;
-	// 	postElement.getElementsByClassName('text')[0].innerText = data.val().body;
-	// 	postElement.getElementsByClassName('star-count')[0].innerText = data.val().starCount;
-  //   });
-  //   postsRef.on('child_removed', function(data) {
-	// 	var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-	// 	var post = containerElement.getElementsByClassName('post-' + data.key)[0];
-	//     post.parentElement.removeChild(post);
-  //   });
-  // };
-
-  // // Fetching and displaying all posts of each sections.
-  // fetchPosts(topUserPostsRef, topUserPostsSection);
-  // fetchPosts(recentPostsRef, recentPostsSection);
-  // fetchPosts(userPostsRef, userPostsSection);
-
-  // // Keep track of all Firebase refs we are listening to.
-  // listeningFirebaseRefs.push(topUserPostsRef);
-  // listeningFirebaseRefs.push(recentPostsRef);
-  // listeningFirebaseRefs.push(userPostsRef);
+});
 }
+
 
 function changeCurrentStatus(status){
   var ref = firebase.database().ref();
@@ -384,28 +352,6 @@ function changeCurrentStatus(status){
 
 function move(){
 
-// var ref = firebase.database().ref();
-//   ref.once('value').then(function(snapshot){
-//     var index = snapshot.val().index;
-
-//     var elememt = document.getElementById("timeline");
-//     if(index==0){
-//       elememt.innerHTML = '<div class="dot">'+
-// 	    '<span></span>'+
-// 		  '<date>'+nodes[index]+'</date>'+
-// 	    '</div>';
-//     }
-//     else{
-//       elememt.innerHTML = elememt.innerHTML + '<div class="dot">'+
-// 	    '<span></span>'+
-// 		  '<date>'+nodes[index]+'</date>'+
-// 	    '</div>';
-//     }
-
-//     var c = index + 1;
-//     ref.update({
-//       "index":c
-//     });
   index = index + 1;
   var elememt = document.getElementById("timeline");
   if(nodes.length == 0) {
@@ -415,7 +361,7 @@ function move(){
   else{
   if(total_count == 0){
       elememt.innerHTML = '<div class="dot">'+
-	    '<span id="'+index+'"></span>'+
+	    '<span id="'+total_count+'"></span>'+
 		  '<date>'+nodes[index]+'</date>'+
 	    '</div>';
       total_count = total_count + 1;
@@ -428,7 +374,7 @@ function move(){
     }
     else{
       elememt.innerHTML = elememt.innerHTML + '<div class="dot">'+
-	    '<span id="'+index+'"></span>'+
+	    '<span id="'+total_count+'"></span>'+
 		  '<date>'+nodes[index]+'</date>'+
 	    '</div>';
       document.getElementById(index-1).style.background = "grey";
