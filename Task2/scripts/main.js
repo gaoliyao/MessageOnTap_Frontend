@@ -145,6 +145,7 @@ function move(){
 
 function clearAll(){
   index = -1;
+  total_count = 0;
   var elememt = document.getElementById("timeline");
       elememt.innerHTML = '';
 }
